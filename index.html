@@ -1,26 +1,67 @@
-               "name": "project-rusher-custom-rushed",
-                    "rating": 34,
-                    "engine": { "name": "rushed-engine" },
-                    "title": "Rushed",
-                    "artists": "Project: RUSHER Custom",
-                    "author": "YourName",
-                    "description": "Custom high-velocity chart deployment.",
-                    "cover": { "url": cleanDomain + "/assets/cover.png" },
-                    "bgm": { "url": cleanDomain + "/assets/rushed.mp3" },
-                    "data": { "url": cleanDomain + "/assets/rushed.gz" }
-                }
-            ]
-        };
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏎️ Rushed Engine Server Portal</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #0b0c10; color: #c5c6c7; line-height: 1.6; padding: 40px 20px; text-align: center; }
+        .container { max-width: 700px; margin: 0 auto; background: #1f2833; padding: 40px; border-radius: 12px; border: 2px solid #66fcf1; box-shadow: 0 8px 30px rgba(0, 252, 241, 0.1); }
+        h1 { color: #66fcf1; font-size: 2.5rem; margin-bottom: 10px; letter-spacing: 1px; }
+        .subtitle { color: #45f3ff; font-weight: bold; font-size: 1.1rem; margin-bottom: 30px; text-transform: uppercase; }
+        p { margin-bottom: 20px; font-size: 1.05rem; }
+        .url-box { background: #0b0c10; border: 1px solid #45f2ff; padding: 14px; border-radius: 6px; font-family: "Courier New", Courier, monospace; font-size: 1.1rem; color: #66fcf1; display: block; width: 100%; margin: 20px 0; font-weight: bold; text-align: center; }
+        .btn { display: inline-block; background: #45f3ff; color: #0b0c10; padding: 16px 32px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; margin: 10px; transition: background 0.2s, transform 0.1s; box-shadow: 0 4px 15px rgba(69, 243, 255, 0.3); }
+        .btn.download-btn { background: #ffaa00; box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3); }
+        .notice { margin-top: 40px; font-size: 0.85rem; color: #888; border-top: 1px solid #2f3b4c; padding-top: 20px; text-align: left; }
+    </style>
+</head>
+<body>
 
-        // Execution router to capture app tracking hooks
-        if (path.endsWith('/sonolus/info') || window.location.search === '?sonolus=info') {
-            document.body.innerHTML = JSON.stringify(serverInfoPayload);
-            document.body.style.fontFamily = 'monospace';
-            document.body.style.whiteSpace = 'pre';
-        } else if (path.endsWith('/sonolus/levels/list') || window.location.search === '?sonolus=levels') {
-            document.body.innerHTML = JSON.stringify(levelListPayload);
-            document.body.style.fontFamily = 'monospace';
-            document.body.style.whiteSpace = 'pre';
+    <div class="container">
+        <h1>🏎️ RUSHED ENGINE</h1>
+        <div class="subtitle">High-Velocity Horizontal Left-Line Playfield</div>
+        <p>Welcome to the official repository landing hub.</p>
+        
+        <button onclick="downloadChart()" class="btn download-btn">📥 Step 1: Download rushed.gz File</button>
+        <br>
+        <a id="deepLink" href="#" class="btn">🚀 Step 2: Connect to Sonolus App</a>
+
+        <p style="margin-top:20px;">Manual Connection URL:</p>
+        <input type="text" class="url-box" id="serverUrl" readonly>
+    </div>
+
+    <script>
+        // Forces the app to ignore the trailing dot when routing files
+        const cleanDomain = "https://github.io.";
+        
+        document.getElementById('serverUrl').value = cleanDomain;
+        document.getElementById('deepLink').href = "sonolus://user-bit.github.io/Rushed.";
+
+        function downloadChart() {
+            const base64Gzip = "H4sIAAAAAAAAA31Tyw7CMAw7VyF97pREtBiddPIBiEORA5pAJVCNhvDutY0DHyAkiR3bSezE9idKcyBfQLWzB10IJILeRylySFIbpEJ5UcegBwJyaaFeoasGIbQcpXpDVd09ORShGbygMYPshunOUIwKFuEImESNmsvyXZOHWpKXKw97TIaCmrU3SyuNhwZCH8v9GscbVLmkVQrS+UFCmS/YMiKwtmK6vGKeL4wFPLWeL6H0Qwsz0xVme9Cpbvjm5mX2YZEwiMVoKpMcR7gCnY7w9f3H43N8mP1YJDREuCyhGfE6O0zS9fED656bE0wDAAA=";
+            const binaryString = atob(base64Gzip);
+            const len = binaryString.length;
+            const bytes = new Uint8Array(len);
+            for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); }
+            const blob = new Blob([bytes], {type: "application/gzip"});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = "rushed.gz";
+            link.click();
+        }
+
+        // Checks if the incoming request is coming from your iPad's Sonolus App
+        const currentPath = window.location.pathname.toLowerCase();
+        const currentSearch = window.location.search.toLowerCase();
+
+        if (currentPath.includes('/sonolus/info') || currentSearch === '?sonolus=info') {
+            document.body.innerHTML = JSON.stringify({"title": "Rushed Server","description": "Custom Horizontal Engine","banner": {"url": ""},"levels": {"items": [],"search": {"options": []}},"skins": {"items": [],"search": {"options": []}},"backgrounds": {"items": [],"search": {"options": []}},"effects": {"items": [],"search": {"options": []}},"particles": {"items": [],"search": {"options": []}},"engines": {"items": [],"search": {"options": []}}});
+            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
+        } else if (currentPath.includes('/sonolus/levels/list') || currentSearch === '?sonolus=levels') {
+            document.body.innerHTML = JSON.stringify({"pageCount": 1,"items": [{"name": "project-rusher-custom-rushed","rating": 34,"engine": {"name": "rushed-engine"},"title": "Rushed","artists": "Project: RUSHER Custom","author": "YourName","description": "Custom level.","cover": {"url": cleanDomain + "/assets/cover.png"},"bgm": {"url": cleanDomain + "/assets/rushed.mp3"},"data": {"url": cleanDomain + "/assets/rushed.gz"}}]});
+            document.body.style.fontFamily = 'monospace'; document.body.style.whiteSpace = 'pre'; document.body.style.background = '#fff'; document.body.style.color = '#000';
         }
     </script>
 </body>
