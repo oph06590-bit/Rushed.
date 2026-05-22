@@ -1,4 +1,4 @@
-# Rushed.
+# Rushed Server
 This is not affiliated with Project Rusher.
 This is a Project Rusher inspired code and server in the community of Sonolus.
 Characters are unofficial. I do not endorce copyright as "custom charts" and nor do want it.
