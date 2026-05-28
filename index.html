@@ -10,7 +10,7 @@
         
         /* ORIGINAL BRANDING HEADER CHASSIS */
         .top-header { background: linear-gradient(135deg, #101424, #1a223f); color: #45f3ff; padding: 18px; font-weight: bold; font-size: 1.8rem; letter-spacing: 1px; margin-bottom: 25px; border-radius: 8px; border: 1px solid #45f3ff; text-transform: uppercase; text-shadow: 0 0 10px rgba(69,243,255,0.5); }
-        .container { max-width: 800px; margin: 0 auto; }
+        .container { max-width: 750px; margin: 0 auto; }
 
         .sonolus-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
         .grid-card { background: #121622; border: 1px solid #232d42; padding: 20px 10px; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-decoration: none; color: #a4a7ab; font-weight: bold; font-size: 1.05rem; transition: all 0.2s ease; }
@@ -36,7 +36,6 @@
 <body>
 
     <div class="container">
-        <!-- PROJECT BRANDING RENAMED DIRECTLY TO RUSHED -->
         <div class="top-header">Rushed Studio</div>
 
         <div class="sonolus-grid">
@@ -85,7 +84,7 @@
         </div>
 
         <div class="editor-workspace">
-            <h3 style="color:#45f3ff; margin-bottom:15px; font-size:1.4rem; text-align:left;">🛠️ Vertical Editor Workspace (Compiles to Horizontal Gameplay)</h3>
+            <h3 style="color:#45f3ff; margin-bottom:15px; font-size:1.4rem; text-align:left;">🛠️ Rushed Vertical Editor Workspace (Compiles to Horizontal Gameplay)</h3>
             <div class="control-row">
                 <div class="control-group">
                     <label>BPM Rate (Scales Grid Rows)</label>
@@ -94,8 +93,8 @@
                 <div class="control-group">
                     <label>Active Mapping Tool</label>
                     <select id="noteTypeSelector">
-                        <option value="2">🔘 Horizontal Tap Circle Target</option>
-                        <option value="4">⭐ Custom Guided Star (Hold Track)</option>
+                        <option value="2">🔵 Blue Tap Circle Target</option>
+                        <option value="4">💗 Pink Star Flick Target</option>
                     </select>
                 </div>
             </div>
@@ -122,7 +121,6 @@
         let beatHeight = canvas.height / totalBeats;
         let notesArray = [];
 
-        // Automatic link routing system
         const currentDomain = window.location.origin + window.location.pathname.replace('index.html', '');
         const cleanDomain = currentDomain.replace(/\/\$/, ""); 
         
@@ -149,7 +147,7 @@
             }
 
             ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
-            ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
+ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
 // SCROLLBAR TRACKBAR SYSTEM FROM SKETCHIMAGE
 const scrollX = 390;
 ctx.fillStyle = '#a4a7ab';
@@ -162,12 +160,15 @@ notesArray.forEach(note => {
 const x = (note.laneIndex * laneWidth) + (laneWidth / 2);
 const y = canvas.height - (note.beat * beatHeight) - 20;
 if (y < 0 || y > canvas.height) return;
+// TYPE 4: PINK STAR NOTE (Flick Input)
 if (note.type === 4) {
-ctx.fillStyle = '#ffdf00'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+ctx.fillStyle = '#ff1493'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
 drawStar(x, y, 5, 18, 8);
-ctx.strokeStyle = 'rgba(255, 223, 0, 0.4)'; ctx.lineWidth = 14;
+ctx.strokeStyle = 'rgba(255, 20, 147, 0.4)'; ctx.lineWidth = 14;
 ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + beatHeight); ctx.stroke();
-} else {
+}
+// TYPE 2: BLUE CIRCLE NOTE (Tap Input)
+else {
 ctx.fillStyle = '#00bfff'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3;
 ctx.beginPath(); ctx.arc(x, y, 16, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
 ctx.fillStyle = '#ffffff';
@@ -221,4 +222,3 @@ txtArea.style.display = 'block';
 alert("Rushed layout chart compiled successfully!");
 }
 updateBpmScaling();
-
