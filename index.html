@@ -23,7 +23,8 @@
         .btn { display: inline-block; width: 100%; background: #45f3ff; color: #07090e; padding: 14px; font-weight: bold; text-decoration: none; border-radius: 6px; font-size: 1.1rem; border: none; cursor: pointer; text-align: center; box-shadow: 0 4px 12px rgba(69, 243, 255, 0.2); }
         .btn:hover { background: #66fcf1; }
 
-        .editor-workspace { background: #121622; border-radius: 8px; padding: 20px; border: 1px solid #232d42; margin-top: 25px; }
+        /* TIMELINE WORKSPACE DISPLAY DESIGN */
+        .editor-workspace { background: #121622; border-radius: 8px; padding: 20px; border: 1px solid #232d42; margin-top: 25px; display: block !important; }
         .control-row { display: flex; gap: 10px; margin-bottom: 15px; width: 100%; }
         .control-group { display: flex; flex-direction: column; flex: 1; text-align: left; }
         .control-group label { font-weight: bold; font-size: 0.85rem; color: #45f3ff; margin-bottom: 5px; }
@@ -38,6 +39,7 @@
     <div class="container">
         <div class="top-header">Rushed Studio</div>
 
+        <!-- 3x3 MENU CARDS MATRIX -->
         <div class="sonolus-grid">
             <a href="#" class="grid-card">
                 <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
@@ -83,6 +85,7 @@
             <a id="deepLink" href="#" class="btn">🚀 Open in Sonolus App</a>
         </div>
 
+        <!-- FORCED VISIBILITY CHART WORKSPACE PANEL CONTAINER -->
         <div class="editor-workspace">
             <h3 style="color:#45f3ff; margin-bottom:15px; font-size:1.4rem; text-align:left;">🛠️ Rushed Vertical Editor Workspace (Compiles to Horizontal Gameplay)</h3>
             <div class="control-row">
@@ -121,6 +124,7 @@
         let beatHeight = canvas.height / totalBeats;
         let notesArray = [];
 
+        // Automatic URL calculation string builder
         const currentDomain = window.location.origin + window.location.pathname.replace('index.html', '');
         const cleanDomain = currentDomain.replace(/\/\$/, ""); 
         
@@ -142,13 +146,12 @@
                 ctx.beginPath(); ctx.moveTo(i * laneWidth, 0); ctx.lineTo(i * laneWidth, canvas.height); ctx.stroke();
             }
 
-            for (let j = 0; j <= totalBeats; j++) {
+            for (let j = 0; j <= totalBeats; j++) 
                 ctx.beginPath(); ctx.moveTo(0, j * beatHeight); ctx.lineTo(playfieldWidth, j * beatHeight); ctx.stroke();
-            }
-
-            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
+}
+ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
 ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
-// SCROLLBAR TRACKBAR SYSTEM FROM SKETCHIMAGE
+// SCROLLBAR TRACK FROM DRAWING
 const scrollX = 390;
 ctx.fillStyle = '#a4a7ab';
 ctx.beginPath(); ctx.roundRect(scrollX - 10, 20, 20, canvas.height - 40, 10); ctx.fill();
@@ -160,15 +163,12 @@ notesArray.forEach(note => {
 const x = (note.laneIndex * laneWidth) + (laneWidth / 2);
 const y = canvas.height - (note.beat * beatHeight) - 20;
 if (y < 0 || y > canvas.height) return;
-// TYPE 4: PINK STAR NOTE (Flick Input)
 if (note.type === 4) {
 ctx.fillStyle = '#ff1493'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
 drawStar(x, y, 5, 18, 8);
 ctx.strokeStyle = 'rgba(255, 20, 147, 0.4)'; ctx.lineWidth = 14;
 ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + beatHeight); ctx.stroke();
-}
-// TYPE 2: BLUE CIRCLE NOTE (Tap Input)
-else {
+} else {
 ctx.fillStyle = '#00bfff'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3;
 ctx.beginPath(); ctx.arc(x, y, 16, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
 ctx.fillStyle = '#ffffff';
@@ -222,4 +222,79 @@ txtArea.style.display = 'block';
 alert("Rushed layout chart compiled successfully!");
 }
 updateBpmScaling();
-        
+ctx.beginPath(); ctx.moveTo(0, j * beatHeight); ctx.lineTo(playfieldWidth, j * beatHeight); ctx.stroke();
+}
+ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 4;
+ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(playfieldWidth, canvas.height - 20); ctx.stroke();
+// SCROLLBAR TRACK FROM DRAWING
+const scrollX = 390;
+ctx.fillStyle = '#a4a7ab';
+ctx.beginPath(); ctx.roundRect(scrollX - 10, 20, 20, canvas.height - 40, 10); ctx.fill();
+ctx.fillStyle = '#000000'; ctx.strokeStyle = '#45f3ff'; ctx.lineWidth = 2;
+ctx.beginPath(); ctx.roundRect(scrollX - 12, canvas.height / 2, 24, (canvas.height / 2) - 20, 12); ctx.fill(); ctx.stroke();
+ctx.fillStyle = '#45f3ff'; ctx.font = 'bold 12px sans-serif';
+ctx.fillText('Scroll', scrollX - 50, canvas.height / 2 - 10);
+notesArray.forEach(note => {
+const x = (note.laneIndex * laneWidth) + (laneWidth / 2);
+const y = canvas.height - (note.beat * beatHeight) - 20;
+if (y < 0 || y > canvas.height) return;
+if (note.type === 4) {
+ctx.fillStyle = '#ff1493'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+drawStar(x, y, 5, 18, 8);
+ctx.strokeStyle = 'rgba(255, 20, 147, 0.4)'; ctx.lineWidth = 14;
+ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x, y + beatHeight); ctx.stroke();
+} else {
+ctx.fillStyle = '#00bfff'; ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 3;
+ctx.beginPath(); ctx.arc(x, y, 16, 0, 2 * Math.PI); ctx.fill(); ctx.stroke();
+ctx.fillStyle = '#ffffff';
+ctx.beginPath(); ctx.arc(x, y, 5, 0, 2 * Math.PI); ctx.fill();
+}
+});
+}
+function drawStar(cx, cy, spikes, outerRadius, innerRadius) {
+let rot = Math.PI / 2 * 3, x = cx, y = cy, step = Math.PI / spikes;
+ctx.beginPath(); ctx.moveTo(cx, cy - outerRadius)
+for (let i = 0; i < spikes; i++) {
+x = cx + Math.cos(rot) * outerRadius; y = cy + Math.sin(rot) * outerRadius; ctx.lineTo(x, y); rot += step;
+x = cx + Math.cos(rot) * innerRadius; y = cy + Math.sin(rot) * innerRadius; ctx.lineTo(x, y); rot += step;
+}
+ctx.lineTo(cx, cy - outerRadius); ctx.closePath(); ctx.fill(); ctx.stroke();
+}
+canvas.addEventListener('click', function(event) {
+const rect = canvas.getBoundingClientRect();
+const clickX = ((event.clientX - rect.left) / rect.width) * canvas.width;
+const clickY = ((event.clientY - rect.top) / rect.height) * canvas.height;
+if (clickX > playfieldWidth) return;
+const targetLaneIndex = Math.floor(clickX / laneWidth);
+const targetBeat = Math.floor((canvas.height - 20 - clickY) / beatHeight);
+const selectedType = parseInt(document.getElementById('noteTypeSelector').value);
+if (targetLaneIndex >= 0 && targetLaneIndex < numLanes && targetBeat >= 0) {
+const existingIndex = notesArray.findIndex(n => n.beat === targetBeat && n.laneIndex === targetLaneIndex);
+if (existingIndex !== -1) { notesArray.splice(existingIndex, 1); }
+else { notesArray.push({ beat: targetBeat, laneIndex: targetLaneIndex, type: selectedType }); }
+drawEditorGrid();
+}
+});
+function compileVisualChart() {
+const bpm = parseInt(document.getElementById('bpmRate').value) || 150;
+let chartPayload = { "version": 1, "bgmOffset": 0.0, "entities": [{ "archetype": 0, "data": [{ "name": "beat", "value": 0 }, { "name": "bpm", "value": bpm }] }, { "archetype": 1, "data": [] }] };
+notesArray.forEach(n => {
+chartPayload.entities.push({
+"archetype": n.type,
+"data": [
+{ "name": "targetBeat", "value": n.beat },
+{ "name": "laneIndex", "value": n.laneIndex - 1 },
+{ "name": "laneHeight", "value": 0.25 }
+]
+});
+});
+const compressedBin = pako.gzip(JSON.stringify(chartPayload));
+const base64String = btoa(String.fromCharCode.apply(null, compressedBin));
+const txtArea = document.getElementById('shareLinkResult');
+const cleanAppDomain = cleanDomain.replace(/^https?:///, "");
+txtArea.value = "sonolus://" + cleanAppDomain + "?chart=" + base64String;
+txtArea.style.display = 'block';
+alert("Rushed layout chart compiled successfully!");
+}
+updateBpmScaling();
+
